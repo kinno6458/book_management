@@ -15,6 +15,12 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/").permitAll() // /  というURLはアクセスOK
                         .anyRequest().authenticated() // それ以外のURLはログインが必要
+                ).formLogin(login -> login
+                        .loginProcessingUrl("/login") // ユーザーID・PWの送信先URL（POST）
+                        .loginPage("/login")          //ログイン画面のURL（GET）
+                        .defaultSuccessUrl("/")       //ログイン成功時のリダイレクト先URL
+                        .failureUrl("/login?error")  //ログイン失敗時のリダイレクト先URL
+                        .permitAll()                  //ログイン画面のアクセス権限の設定（全て許可）
                 );
 
 
