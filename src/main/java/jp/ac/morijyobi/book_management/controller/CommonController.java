@@ -14,12 +14,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/common")
 public class CommonController {
+    //依存性の注入
+    //あらかじめ処理を持ってきておく。
 
     private final UserService userService;
 
     public CommonController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping("/register")
     public String register(Model model) {
         UserForm userForm = new UserForm();

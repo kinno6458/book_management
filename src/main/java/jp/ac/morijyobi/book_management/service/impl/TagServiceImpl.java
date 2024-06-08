@@ -8,16 +8,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TagServiceImpl implements TagService {
-    private final TagMapper tagMapper;
 
-    public TagServiceImpl(TagMapper tagMapper) {
-        this.tagMapper = tagMapper;
+
+    private final TagMapper tagsMapper;
+
+    public TagServiceImpl(TagMapper tagsMapper) {
+        this.tagsMapper = tagsMapper;
     }
 
     @Override
     public Tag registerTag(TagForm tagForm) {
         Tag tag = new Tag();
         tag.setTagName(tagForm.getTagName());
+
+        tagsMapper.insertTag(tag);
 
         return null;
     }

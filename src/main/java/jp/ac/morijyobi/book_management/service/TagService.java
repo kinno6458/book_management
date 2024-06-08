@@ -5,4 +5,5 @@ import jp.ac.morijyobi.book_management.bean.form.TagForm;
 
 public interface TagService {
     Tag registerTag(TagForm tagForm);
+
 }

@@ -17,6 +17,7 @@ public class TagController {
 
     private final TagService tagService;
 
+
     public TagController(TagService tagService) {
         this.tagService = tagService;
     }
@@ -36,7 +37,6 @@ public class TagController {
         if(bindingResult.hasErrors()) {
             return "tag/register-tag";
         }
-
 
         tagService.registerTag(tagForm);
         redirectAttributes.addFlashAttribute("message","登録が完了しました。");
