@@ -1,5 +1,6 @@
 package jp.ac.morijyobi.book_management.controller;
 
+import jp.ac.morijyobi.book_management.bean.dto.LoanedBookDTO;
 import jp.ac.morijyobi.book_management.bean.entity.Book;
 import jp.ac.morijyobi.book_management.bean.entity.Tag;
 import jp.ac.morijyobi.book_management.bean.form.BookForm;
@@ -96,6 +97,27 @@ public class BookController {
 
 
         return "redirect:/book/list";
+    }
+    @GetMapping("/loans")
+    public String loanedBooks(@AuthenticationPrincipal UserDetails userDetails,
+                              Model model) {
+        List<LoanedBookDTO> loanedBookList = bookService.getLoanedBooksByUser(userDetails);
+        model.addAttribute("loanedBookList", loanedBookList);
+        return "book/loaned-books";
+    }
+
+    @GetMapping("return")
+    public String returnBook(@RequestParam int bookId,
+                             @AuthenticationPrincipal UserDetails userDetails,
+                             RedirectAttributes redirectAttributes,
+                             Model model) {
+        if (bookService.returnBookLoans(bookId, userDetails)) {
+            redirectAttributes.addFlashAttribute("mesage", "返却が完了しました。");
+        } else {
+            redirectAttributes.addFlashAttribute("warning", "返却に失敗しました。");
+        }
+
+        return "redirect:/book/loans";
     }
 
 }
